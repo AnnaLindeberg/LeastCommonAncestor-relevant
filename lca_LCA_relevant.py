@@ -134,4 +134,32 @@ def lca_relevant_dag(dag):
             modified_dag = ominus(modified_dag, v)
     
     return modified_dag
-    
+
+def is_shortcut(dag, edge):
+    """
+    Finds out if an edge (u,v) of a DAG G is a shortcut i.e. if there is a directed uv-path in G avoiding the edge.
+
+    :param dag: The DAG represented as a NetworkX DiGraph.
+    :param edge: An edge of the DAG, tuple.
+    :return: True if edge is a shortcut, otherwise False.
+    """
+    u, v = edge
+    other_children = [w for w in dag.successors(u) if w != v]
+    for child in other_children:
+        for descendant in nx.dfs_postorder_nodes(dag, child):
+            if descendant == v:
+                return True
+    return False
+
+def remove_shortcuts(dag):
+    """
+    Finds and removes all shortcuts of a DAG G.
+
+    :param dag: The DAG represented as a NetworkX DiGraph.
+    :return: A modified NetworkX DiGraph with shortcuts removed.
+    """
+    modified_dag = dag.copy()
+    for e in dag.edges():
+        if is_shortcut(modified_dag, e):
+            modified_dag.remove_edge(*e)
+    return modified_dag
