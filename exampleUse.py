@@ -1,5 +1,8 @@
 import networkx as nx
 import phylox.newick_parser
+from phylox import DiNetwork
+from phylox.constants import LENGTH_ATTR
+from phylox.newick_parser import dinetwork_to_extended_newick
 from networkx.drawing.nx_pydot import write_dot
 from lca_LCA_relevant import *
 import warnings
@@ -43,9 +46,9 @@ def main():
             pydotGraph.write_png(fileName + '.png')
         
         # If you DO have pygraphviz installed and working, the following can be used
-        # dotGraph = nx.nx_agraph.to_agraph(graph)
-        # fileType = '.png'
-        # dotGraph.draw(fileName + fileType, format=fileType[1:], prog='dot' )
+#        dotGraph = nx.nx_agraph.to_agraph(graph)
+#        fileType = '.png'
+#        dotGraph.draw(fileName + fileType, format=fileType[1:], prog='dot' )
 
 if __name__ == '__main__':
     main()
