@@ -2,6 +2,7 @@ import networkx as nx
 import phylox.newick_parser
 from networkx.drawing.nx_pydot import write_dot
 from lca_LCA_relevant import *
+import warnings
 
 def main():
     # Example usage:
@@ -30,15 +31,16 @@ def main():
     # Display the edges of the lca-relevant DAG
     print("Edges of the lca-relevant DAG:", list(lca_rel_G.edges))
 
-    # And/or use pydot for nice visualizations
-    # Unfortunately, pydot is not actively maintained but still works here
-    # It is probably better to use Pygraphviz, but larger dependencies to install
-    nxGraphs = [G, LCA_rel_G, lca_rel_G]
-    fileNames = ["viola-org", "viola-LCArel", "viola-lowercase-lcarel"]
-    for graph, fileName in zip(nxGraphs, fileNames):
-        pydotGraph = nx.nx_pydot.to_pydot(graph)
-        pydotGraph.write_svg(fileName + '.svg')
-        pydotGraph.write_pdf(fileName + '.pdf')
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        # And/or use pydot for nice visualizations
+        # Unfortunately, pydot is not actively maintained but still works here
+        # It is probably better to use Pygraphviz, but larger dependencies to install
+        nxGraphs = [G, LCA_rel_G, lca_rel_G]
+        fileNames = ["viola-org", "viola-LCArel", "viola-lowercase-lcarel"]
+        for graph, fileName in zip(nxGraphs, fileNames):
+            pydotGraph = nx.nx_pydot.to_pydot(graph)
+            pydotGraph.write_png(fileName + '.png')
 
 
 if __name__ == '__main__':
