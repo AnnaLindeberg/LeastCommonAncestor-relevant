@@ -20,8 +20,15 @@ In the provided larger example, the following tools are required
 
 ## Usage and description
 
-input: Extended Newick (give ref)
+As input an extended Newick format in a file `FILE` is expected (see [ref](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-9-532))
+
+As output you will get the original network, the LCA-relevant and an lca-relevant version stored in
+
 output: edge-list (file), ExtNewick (file) and a png of the respective lca-rel and LCA-rel DAG
+* `FILE-orig.txt`,  `FILE-LCArel.txt`, `FILE-lowercase-lcarel.txt` (edge list)
+* `FILE-orig.newick`,  `FILE-LCArel.newick`, `FILE-lowercase-lcarel.newick` (extended Newick format)
+* `FILE-orig.png`,  `FILE-LCArel.png`, `FILE-lowercase-lcarel.png` (png file containing a drawing of the networks)
+
 
 ## Citation and references
 
