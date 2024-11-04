@@ -7,6 +7,12 @@ from networkx.drawing.nx_pydot import write_dot
 from lca_LCA_relevant import *
 import warnings
 
+def relabelPhyloX(label):
+    if isinstance(label, int):
+        return abs(label)
+    else:
+        return label
+
 def main():
     # Example usage:
     # Parse the Viola network, provided in (extended) Newick format
@@ -14,16 +20,15 @@ def main():
     with open("viola.newick") as newickFile:
         newickStr = newickFile.readline().strip()
         G = phylox.newick_parser.extended_newick_to_dinetwork(newickStr)
+        G = nx.relabel_nodes(G, relabelPhyloX)
 
 
     # Compute the LCA-relevant DAG without shortcuts
     LCA_rel_G = LCA_relevant_dag(G)
-    LCA_rel_G = nx.relabel_nodes(LCA_rel_G, lambda x: abs(int(x)))
     LCA_rel_G = remove_shortcuts(LCA_rel_G)
 
     # Compute the lca-relevant DAG
     lca_rel_G = lca_relevant_dag(G)
-    lca_rel_G = nx.relabel_nodes(lca_rel_G, lambda x: abs(int(x)))
     lca_rel_G = remove_shortcuts(lca_rel_G)
 
 
