@@ -20,7 +20,8 @@ In the provided larger example, the following tools are required
 
 ## Usage and description
 
-
+input: Extended Newick (give ref)
+output: edge-list (file), ExtNewick (file) and a png of the respective lca-rel and LCA-rel DAG
 
 ## Citation and references
 
