@@ -29,13 +29,7 @@ def main():
     lca_rel_G = lca_relevant_dag(G)
     lca_rel_G = remove_shortcuts(lca_rel_G)
 
-
-    # Display the edges of the LCA-relevant DAG
-    # print("Edges of the LCA-relevant DAG:", list(LCA_rel_G.edges))
-    # print(LCA_rel_newick)
-    # # Display the edges of the lca-relevant DAG
-    # print("Edges of the lca-relevant DAG:", list(lca_rel_G.edges))
-
+    # Write results to file, with warnings of deprecation of Pydot supressed
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", DeprecationWarning)
         # And/or use pydot for nice visualizations
