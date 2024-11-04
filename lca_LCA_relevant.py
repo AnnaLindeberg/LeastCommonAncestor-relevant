@@ -2,13 +2,18 @@ import networkx as nx
 
 def ominus(dag, node):
     """
-    Perform the \ominus-operation on the DAG by removing a node and its incident edges,
+    Perform the ominus-operation on the DAG by removing a node and its incident edges,
     and connecting all parents of the node to all its children.
     
     :param dag: A NetworkX DiGraph object.
     :param node: The node to be removed from the graph.
-    :return: A modified NetworkX DiGraph with the \ominus-operation applied.
+    :return: A modified NetworkX DiGraph with the ominus-operation applied.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    elif node not in dag:
+        raise ValueError(f"{node} is not a node of {dag}")
+    
     # Create a copy to avoid modifying the original graph
     modified_dag = dag.copy()
     
@@ -35,6 +40,11 @@ def cluster_of(dag, v):
     :param v: The node for which we want to find all leaf descendants.
     :return: A set containing all leaf nodes that are descendants of v.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    elif v not in dag:
+        raise ValueError(f"{v} is not a node of {dag}")
+
     leaf_descendants = set()
     
     for descendant in nx.dfs_postorder_nodes(dag, v):
@@ -48,9 +58,18 @@ def LCA_of(dag, A):
     Finds the set of lowest common ancestors (LCA) of a subset A in a DAG.
     
     :param dag: The DAG represented as a NetworkX DiGraph.
-    :param A: A subset of nodes for which we want to find the LCA.
+    :param A: A subset of leaves for which we want to find the LCA.
     :return: A set containing the LCA nodes for the subset A.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    
+    leaves = {v for v in dag.nodes if dag.out_degree(v) == 0}
+    
+    if not isinstance(A, set) or not A.issubset(leaves) or len(A) >= 1:
+        raise ValueError(f"{A} is not a nonempty subset of leaves.")
+    
+
     if len(A) == 1:
         return A
     
@@ -85,28 +104,32 @@ def lca_of(dag, A):
     :return: The vertex v such that v = lca(A) if well-defined, otherwise None
     """
     allLCA = LCA_of(dag, A)
+    
     if len(allLCA) == 1:
         return next(iter(allLCA))
 
 
 def LCA_relevant_dag(dag):
     """
-    Computes the $\LCA$-\rel DAG by removing vertices v for which v \notin LCA(C_G(v)).
+    Computes the LCA-rel DAG by removing vertices v for which v not in LCA(C_G(v)).
     
     :param dag: The DAG represented as a NetworkX DiGraph.
-    :return: A modified NetworkX DiGraph with vertices in W removed via the \ominus-operation.
+    :return: A modified NetworkX DiGraph with vertices in W removed via the ominus-operation.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    
     W = set()
     
     for v in dag.nodes:
         leaf_descendants = cluster_of(dag, v)
-        lca_set = LCA_of(dag, leaf_descendants)
+        LCA_set = LCA_of(dag, leaf_descendants)
         
         # If v is not in the LCA of its leaf descendants, add it to W
-        if v not in lca_set:
+        if v not in LCA_set:
             W.add(v)
     
-    # Apply the \ominus-operation by removing each node in W from the DAG
+    # Apply the ominus-operation by removing each node in W from the DAG
     # TODO: OK to remove print?
     # print("W = ", W	)
     modified_dag = dag.copy()
@@ -118,11 +141,14 @@ def LCA_relevant_dag(dag):
 
 def lca_relevant_dag(dag):
     """
-    Computes the $\lca$-\rel DAG by removing vertices v for which v \neq lca(C_G(v)).
+    Computes the lca-rel DAG by removing vertices v for which v neq lca(C_G(v)).
     
     :param dag: The DAG represented as a NetworkX DiGraph.
-    :return: A modified NetworkX DiGraph with vertices removed via the \ominus-operation.
+    :return: A modified NetworkX DiGraph with vertices removed via the ominus-operation.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    
     modified_dag = dag.copy()
     
     for v in modified_dag.nodes:
@@ -143,12 +169,20 @@ def is_shortcut(dag, edge):
     :param edge: An edge of the DAG, tuple.
     :return: True if edge is a shortcut, otherwise False.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    elif edge not in dag.edges:
+        raise ValueError(f"{edge} is not an edge of the DAG")
+
     u, v = edge
     other_children = [w for w in dag.successors(u) if w != v]
+    # (u,v) is a shortcut if and only if there is a path from a child of u distinct from v to v
+    # thus start a dfs from all children of u distinct from v, looking for v.
     for child in other_children:
         for descendant in nx.dfs_postorder_nodes(dag, child):
             if descendant == v:
                 return True
+            
     return False
 
 def remove_shortcuts(dag):
@@ -158,8 +192,12 @@ def remove_shortcuts(dag):
     :param dag: The DAG represented as a NetworkX DiGraph.
     :return: A modified NetworkX DiGraph with shortcuts removed.
     """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise ValueError(f"{dag} is not a DAG")
+    
     modified_dag = dag.copy()
     for e in dag.edges():
         if is_shortcut(modified_dag, e):
             modified_dag.remove_edge(*e)
+            
     return modified_dag
