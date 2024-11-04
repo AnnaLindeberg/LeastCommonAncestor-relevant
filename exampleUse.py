@@ -16,9 +16,12 @@ def main():
         phyloxH = phylox.newick_parser.extended_newick_to_dinetwork(newickStr)
     
     # However, want to work with NetworkX graph – let us generate it
+    G_tmp = nx.DiGraph()
+    G_tmp.add_edges_from(phyloxH.edges())
     G = nx.DiGraph()
-    G.add_edges_from(phyloxH.edges())
+    G = nx.convert_node_labels_to_integers(G_tmp)
     del phyloxH
+    del G_tmp
 
     # Compute the LCA-relevant DAG without shortcuts
     LCA_rel_G = LCA_relevant_dag(G)
