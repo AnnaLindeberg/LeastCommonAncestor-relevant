@@ -41,7 +41,11 @@ def main():
         for graph, fileName in zip(nxGraphs, fileNames):
             pydotGraph = nx.nx_pydot.to_pydot(graph)
             pydotGraph.write_png(fileName + '.png')
-
+        
+        # If you DO have pygraphviz installed and working, the following can be used
+        # dotGraph = nx.nx_agraph.to_agraph(graph)
+        # fileType = '.png'
+        # dotGraph.draw(fileName + fileType, format=fileType[1:], prog='dot' )
 
 if __name__ == '__main__':
     main()
