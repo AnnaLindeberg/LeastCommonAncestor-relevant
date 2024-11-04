@@ -13,22 +13,17 @@ def main():
 
     with open("viola.newick") as newickFile:
         newickStr = newickFile.readline().strip()
-        phyloxH = phylox.newick_parser.extended_newick_to_dinetwork(newickStr)
-    
-    # However, want to work with NetworkX graph – let us generate it
-    G_tmp = nx.DiGraph()
-    G_tmp.add_edges_from(phyloxH.edges())
-    G = nx.DiGraph()
-    G = nx.convert_node_labels_to_integers(G_tmp)
-    del phyloxH
-    del G_tmp
+        G = phylox.newick_parser.extended_newick_to_dinetwork(newickStr)
+
 
     # Compute the LCA-relevant DAG without shortcuts
     LCA_rel_G = LCA_relevant_dag(G)
+    LCA_rel_G = nx.relabel_nodes(LCA_rel_G, lambda x: abs(int(x)))
     LCA_rel_G = remove_shortcuts(LCA_rel_G)
 
     # Compute the lca-relevant DAG
     lca_rel_G = lca_relevant_dag(G)
+    lca_rel_G = nx.relabel_nodes(lca_rel_G, lambda x: abs(int(x)))
     lca_rel_G = remove_shortcuts(lca_rel_G)
 
 
