@@ -18,6 +18,9 @@ The program requires Python 3.10 or higher.
 
 ## Usage and description
 
+A least common ancestor (LCA) of a subset A ⊆ L(G) is a vertex v that is an ancestor of all x ∈ A and has no descendant that also satisfies this property. A DAG or network G is *LCA-relevant* if each vertex is the LCA of some subset of leaves. Moreover, G is *lca-relevant* if each vertex is a unique LCA in G.  DAGs and networks inferred from genomic sequence data can be highly complex and tangled, often containing redundant information. In particular, vertices that are not LCAs of any subset of leaves are can be considered less significant and redundant in an evolutionary contex as they lack direct relevance to the observed ancestral relationships. To reduce unnecessary complexity and eliminate unsupported vertices, we aim to simplify a DAG to retain only LCA vertices while preserving essential evolutionary information. This python tool allows to simplify a DAG by ``removal'' of such vertices resulting in an LCA-relevant, resp., lca-relevant DAG that while preserving key structural
+properties of the original DAG or network.
+
 As input an extended Newick format in a file `FILE` is expected (see [article](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-9-532) for details about the extended Newick format).
 In the `main.py` the file name we used is `FILE` = `violaN` which is also provided in the repository.
 
