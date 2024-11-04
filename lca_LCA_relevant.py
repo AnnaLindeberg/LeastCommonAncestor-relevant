@@ -174,7 +174,7 @@ def lca_relevant_dag(dag):
 
 def is_shortcut(dag, edge):
     """
-    Finds out if an edge (u,v) of a DAG G is a shortcut i.e. if there is a directed uv-path in G avoiding the edge.
+    Finds out if an edge (u,v) of a DAG G is a shortcut i.e. if there is a directed uv-path in G avoiding the edge. 
 
     :param dag: The DAG represented as a NetworkX DiGraph.
     :param edge: An edge of the DAG, tuple.
