@@ -66,7 +66,7 @@ def LCA_of(dag, A):
     
     leaves = {v for v in dag.nodes if dag.out_degree(v) == 0}
     
-    if not isinstance(A, set) or not A.issubset(leaves) or len(A) >= 1:
+    if not isinstance(A, set) or not A.issubset(leaves) or len(A) == 0:
         raise ValueError(f"{A} is not a nonempty subset of leaves.")
     
 
@@ -199,5 +199,5 @@ def remove_shortcuts(dag):
     for e in dag.edges():
         if is_shortcut(modified_dag, e):
             modified_dag.remove_edge(*e)
-            
+
     return modified_dag

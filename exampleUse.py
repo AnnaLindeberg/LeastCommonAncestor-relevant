@@ -1,4 +1,7 @@
 import networkx as nx
+import pydot
+import phylox.newick_parser
+from networkx.drawing.nx_pydot import write_dot
 from lca_LCA_relevant import *
 
 def main():
@@ -93,23 +96,34 @@ def main():
     # Step 3: Add edges to the DAG
     for start, end in edges:
         G.add_edge(start, end)
+    
 
     # TODO: why not this?
     #G.add_edges_from(edges)
 
-    # Compute the LCA-relevant DAG
+    # Compute the LCA-relevant DAG without shortcuts
     LCA_rel_G = LCA_relevant_dag(G)
+    LCA_rel_G = remove_shortcuts(LCA_rel_G)
+
+    # Compute the lca-relevant DAG
+    lca_rel_G = lca_relevant_dag(G)
+    lca_rel_G = remove_shortcuts(lca_rel_G)
+
 
     # Display the edges of the LCA-relevant DAG
     print("Edges of the LCA-relevant DAG:", list(LCA_rel_G.edges))
+    # Display the edges of the lca-relevant DAG
+    print("Edges of the lca-relevant DAG:", list(lca_rel_G.edges))
 
-    # Compute the lca-relevant DAG
-    lca_rel_G = LCA_relevant_dag(G)
+    # And/or use pydot for nice visualizations
+    # Unfortunately, pydot is not actively maintained but still works here
+    # It is probably better to use Pygraphviz, but larger dependencies to install
+    nxGraphs = [G, LCA_rel_G, lca_rel_G]
+    fileNames = ["viola-org", "viola-LCArel", "viola-lowercase-lcarel"]
+    for graph, fileName in zip(nxGraphs, fileNames):
+        pydotGraph = nx.nx_pydot.to_pydot(graph)
+        pydotGraph.write_svg(fileName + '.svg')
 
-    # Display the edges of the LCA-relevant DAG
-    print("Edges of the LCA-relevant DAG:", list(lca_rel_G.edges))
-
-    
 
 if __name__ == '__main__':
     main()
