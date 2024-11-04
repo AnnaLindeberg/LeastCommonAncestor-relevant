@@ -35,7 +35,7 @@ As output you will get the original network, the LCA-relevant and an lca-relevan
 
 If you use this program in your project or code from it, please consider citing:
 
-#### Simplifying and Characterizing DAGs and Phylogenetic Networks via Least Common Ancestor Constraints,  A. Lindeberg, M. Hellmuth, arXiv:2411.00708, 2024
+#### Simplifying and Characterizing DAGs and Phylogenetic Networks via Least Common Ancestor Constraints,  A. Lindeberg and M. Hellmuth, arXiv:2411.00708, 2024
 
 Please report any bugs and questions in the [Issues](https://github.com/AnnaLindeberg/LeastCommonAncestor-relevant/issues) section.
 
