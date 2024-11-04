@@ -1,5 +1,4 @@
 import networkx as nx
-import pydot
 import phylox.newick_parser
 from networkx.drawing.nx_pydot import write_dot
 from lca_LCA_relevant import *
@@ -8,7 +7,6 @@ def main():
     # Example usage:
     # Create a directed graph in NetworkX
     G = nx.DiGraph()
-
     edges = [
     (1, 2),
     (1, 3),
@@ -94,12 +92,8 @@ def main():
     ]
 
     # Step 3: Add edges to the DAG
-    for start, end in edges:
-        G.add_edge(start, end)
-    
+    G.add_edges_from(edges)
 
-    # TODO: why not this?
-    #G.add_edges_from(edges)
 
     # Compute the LCA-relevant DAG without shortcuts
     LCA_rel_G = LCA_relevant_dag(G)
