@@ -1,4 +1,7 @@
 env/*
 *.svg
 *.pdf
+*.newick
+*.txt
+*.png
 .DS_store
