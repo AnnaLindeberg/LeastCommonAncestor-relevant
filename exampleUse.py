@@ -49,12 +49,12 @@ def main():
             with open(newFileName + '.newick', 'w') as newFile:
                 newFile.write(as_newick)
             
-            with open(newFileName + '-edges.txt', 'w') as newFile:
+            with open(newFileName + '.txt', 'w') as newFile:
                 newFile.write(str(graph.edges))
     
             pydotGraph = nx.nx_pydot.to_pydot(graph)
             pydotGraph.write_png(newFileName + '.png')
-            print(f"Output written into {newFileName}.png, {newFileName}-edges.txt and {newFileName}.newick")        
+            print(f"Output written into {newFileName}.png, {newFileName}.txt and {newFileName}.newick")        
         
         # If you DO have pygraphviz installed and working, the following can be used
 #        dotGraph = nx.nx_agraph.to_agraph(graph)
