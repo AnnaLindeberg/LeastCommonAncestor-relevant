@@ -11,7 +11,10 @@ The program requires Python 3.10 or higher.
 
 In the provided larger example, the following tools are required
 * [PhyloX](https://github.com/RemieJanssen/PhyloX) for parsing Newick format network
-* [Pydot](https://pypi.org/project/pydot/) or‚ better yet, [PyGraphviz](https://pygraphviz.github.io/) since Pydot is no longer maintained. However, Pygraphviz can be difficult to install properly and Pydot works rather well on the particular example we provide.
+* [Pydot](https://pypi.org/project/pydot/) 
+
+  Since since Pydot is no longer maintained you can, instead  also uncomment the three lines following "If you DO have pygraphviz installed and working, the following can be used" 
+  and use [PyGraphviz](https://pygraphviz.github.io/). However, Pygraphviz can be difficult to install properly and Pydot still works very well.
 
 
 
