@@ -32,6 +32,8 @@ def ominus(dag, node):
     
     return modified_dag
 
+
+
 def cluster_of(dag, v):
     """
     Finds all leaf nodes that are descendants of a given node v in a DAG G i.e. the cluster C_G(v) of v
@@ -52,6 +54,9 @@ def cluster_of(dag, v):
             leaf_descendants.add(descendant)
     
     return leaf_descendants
+
+
+
 
 def LCA_of(dag, A):
     """
@@ -95,6 +100,8 @@ def LCA_of(dag, A):
             
     return LCA
 
+
+
 def lca_of(dag, A):
     """
     Finds the unique lowest common ancestors (lca) of a subset A in a DAG, if such exist
@@ -107,6 +114,7 @@ def lca_of(dag, A):
     
     if len(allLCA) == 1:
         return next(iter(allLCA))
+
 
 
 def LCA_relevant_dag(dag):
@@ -139,6 +147,7 @@ def LCA_relevant_dag(dag):
     return modified_dag
 
 
+
 def lca_relevant_dag(dag):
     """
     Computes the lca-rel DAG by removing vertices v for which v neq lca(C_G(v)).
@@ -160,6 +169,8 @@ def lca_relevant_dag(dag):
             modified_dag = ominus(modified_dag, v)
     
     return modified_dag
+
+
 
 def is_shortcut(dag, edge):
     """
@@ -184,6 +195,8 @@ def is_shortcut(dag, edge):
                 return True
             
     return False
+
+
 
 def remove_shortcuts(dag):
     """
