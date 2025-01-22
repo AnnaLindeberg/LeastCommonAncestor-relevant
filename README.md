@@ -1,4 +1,4 @@
-# LeastCommonAncestor-relevant
+# SimpliDAG
 Simplifying DAGs and networks to lca-relevant and LCA-relevant DAGs.
 
 ## Installation
